@@ -1,13 +1,15 @@
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
+const createError = require("http-errors");
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const mongoose = require("mongoose");
 
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
+const indexRouter = require("./routes/index");
+const usersRouter = require("./routes/users");
 
-var app = express();
+const app = express();
+const { URI, PORT } = require("./config/index");
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -22,18 +24,14 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 
-const movies = require("./models/movies");
+const Movies = require("./models/movies");
 
 main().catch((err) => console.log(err));
 async function main() {
   try {
-    await mongoose.connect(database.url);
+    await mongoose.connect(URI);
 
     console.log("Database connection established");
-
-    app.listen(process.env.PORT, () => {
-      console.log("Listening on port " + process.env.PORT);
-    });
   } catch (error) {
     console.error("Error connecting to the database:", error);
   }

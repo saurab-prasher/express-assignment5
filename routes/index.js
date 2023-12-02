@@ -1,9 +1,12 @@
-var express = require('express');
-var router = express.Router();
-
+const express = require("express");
+const router = express.Router();
+const mongoose = require("mongoose");
+const Movies = require("../models/movies");
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+router.get("/", async (req, res, next) => {
+  const allMovies = await Movies.find({});
+  console.log(allMovies.length);
+  res.render("index", { title: "Express", data: allMovies.length });
 });
 
 module.exports = router;
