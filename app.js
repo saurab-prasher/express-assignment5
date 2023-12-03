@@ -4,9 +4,12 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
+const handlerbars = require("handlebars");
+const hbs = require("hbs");
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
+const moviesRouter = require("./routes/movies");
 
 const app = express();
 const { URI, PORT } = require("./config/index");
@@ -23,8 +26,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-
-const Movies = require("./models/movies");
+app.use("/movies", moviesRouter);
 
 main().catch((err) => console.log(err));
 async function main() {
