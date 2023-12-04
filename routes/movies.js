@@ -20,10 +20,12 @@ router.get("/", async (req, res) => {
   const perPage = 10; // Adjust this based on your preference
 
   try {
-    const movies = await Movie.find()
+    const movies = await Movie.find({})
       .skip((page - 1) * perPage)
       .limit(perPage)
       .exec();
+
+    console.log(movies[0]);
 
     const totalMovies = await Movie.countDocuments();
     const totalPages = Math.ceil(totalMovies / perPage);
@@ -44,12 +46,11 @@ router.get("/", async (req, res) => {
 // Get details of a specific movie by ID
 router.get("/:id", async (req, res) => {
   try {
-    const movie = await Movie.findById(req.params.id);
-    if (!movie) {
-      res.status(404).json({ error: "Movie not found" });
-      return;
-    }
-    res.json(movie);
+    const id = req.params.id;
+
+    const movie = await Movie.find({ _id: id }).exec();
+    console.log(movie[0].title);
+    res.render("movie", { movieData: movie[0] });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }

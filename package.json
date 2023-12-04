@@ -4,10 +4,12 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "devstart": "nodemon ./bin/www",
-    "serverstart": "DEBUG=express-locallibrary-tutorial:* npm run devstart"
+    "devstart": "npx concurrently \"npm run tailwind:css\" \"npm run serverstart\"",
+    "serverstart": "SET DEBUG=express-locallibrary-tutorial:* && nodemon ./bin/www",
+    "tailwind:css": "postcss public/stylesheets/tailwind.css -o public/stylesheets/style.css --watch"
   },
   "dependencies": {
+    "autoprefixer": "^10.4.16",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^16.3.1",
@@ -17,6 +19,11 @@
     "http-errors": "~1.6.3",
     "method-override": "^3.0.0",
     "mongoose": "^8.0.2",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "postcss": "^8.4.32",
+    "postcss-cli": "^10.1.0"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.5"
   }
 }
