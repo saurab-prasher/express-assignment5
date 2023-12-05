@@ -54,13 +54,11 @@ router.get("/", async (req, res) => {
       .limit(perPage)
       .exec();
 
-    console.log(movies[0]);
-
     const totalMovies = await Movies.countDocuments();
     const totalPages = Math.ceil(totalMovies / perPage);
 
     res.render("movies", {
-      movies,
+      movies: movies,
       currentPage: page,
       hasNextPage: page < totalPages,
       hasPrevPage: page > 1,
@@ -78,14 +76,17 @@ router.get("/:id", async (req, res) => {
   try {
     const id = req.params.id;
 
-    const movie = await Movies.findOne({ _id: id }).exec();
+    const movie = await Movies.find({ _id: id }).exec();
+    console.log(movie[0].title);
+    res.render("movie", { movieData: movie[0] });
     if (!movie) {
       return res.status(404).json({ error: "Movie not found" });
     }
 
     //  console.log(movie.title);
     console.log(movie.imdb);
-    res.render("movie", { movieData: movie });
+    res.send(movie);
+    // res.render("movie", { movieData: movie });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }

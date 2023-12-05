@@ -3,12 +3,15 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-
+const handlebars = require("handlebars");
 const exphbs = require("express-handlebars");
 const mongoose = require("mongoose");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const moviesRouter = require("./routes/movies");
+const {
+  allowInsecurePrototypeAccess,
+} = require("@handlebars/allow-prototype-access");
 // const commentRoutes = require("./comments");
 // const theaterRoutes = require("./theaters");
 
@@ -20,19 +23,26 @@ app.engine(
   ".hbs",
   exphbs.engine({
     extname: ".hbs",
-
+    handlebars: allowInsecurePrototypeAccess(handlebars),
     partialsDir: "views/partials/",
     defaultLayout: "main",
   })
 );
 app.set("view engine", ".hbs");
-// app.set("views", "./views");
+app.set("views", "./views");
 
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
+handlebars.Handlebars = handlebars;
+
+// Add the following line to disable the prototype access check
+handlebars.Handlebars.Utils.escapeExpression = function (value) {
+  return value;
+};
 
 // Set the view engine to use Handlebars
 

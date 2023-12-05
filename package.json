@@ -9,6 +9,7 @@
     "tailwind:css": "postcss public/stylesheets/tailwind.css -o public/stylesheets/style.css --watch"
   },
   "dependencies": {
+    "@handlebars/allow-prototype-access": "^1.0.5",
     "autoprefixer": "^10.4.16",
     "concurrently": "^8.2.2",
     "cookie-parser": "~1.4.4",
