@@ -1,0 +1,30 @@
+{
+  "name": "express-assignment5",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "devstart": "npx concurrently \"npm run tailwind:css\" \"npm run serverstart\"",
+    "serverstart": "DEBUG=express-locallibrary-tutorial:* nodemon ./bin/www",
+    "tailwind:css": "postcss public/stylesheets/tailwind.css -o public/stylesheets/style.css --watch"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.16",
+    "concurrently": "^8.2.2",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "handlebars": "^4.7.8",
+    "hbs": "^4.2.0",
+    "http-errors": "~1.6.3",
+    "method-override": "^3.0.0",
+    "mongoose": "^8.0.2",
+    "morgan": "~1.9.1",
+    "postcss": "^8.4.32",
+    "postcss-cli": "^10.1.0"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.5"
+  }
+}
