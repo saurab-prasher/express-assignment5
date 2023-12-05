@@ -1,0 +1,106 @@
+<form method="POST" action="/movies">
+  <label for="title">Title:</label><br />
+  <input type="text" id="title" name="title" value="Sample Movie Title" /><br />
+
+  <label for="plot">Plot:</label><br />
+  <textarea id="plot" name="plot">This is a sample plot for the movie.</textarea><br
+  />
+
+  <label for="genres">Genres (comma-separated):</label><br />
+  <input type="text" id="genres" name="genres" value="Drama, Comedy" /><br />
+
+  <label for="runtime">Runtime (minutes):</label><br />
+  <input type="number" id="runtime" name="runtime" value="120" /><br />
+
+  <label for="rated">Rated:</label><br />
+  <input type="text" id="rated" name="rated" value="PG-13" /><br />
+
+  <label for="cast">Cast (comma-separated):</label><br />
+  <input
+    type="text"
+    id="cast"
+    name="cast"
+    value="Actor 1, Actor 2, Actor 3"
+  /><br />
+
+  <label for="num_mflix_comments">Number of Comments:</label><br />
+  <input
+    type="number"
+    id="num_mflix_comments"
+    name="num_mflix_comments"
+    value="50"
+  /><br />
+
+  <label for="poster">Poster URL:</label><br />
+  <input
+    type="text"
+    id="poster"
+    name="poster"
+    value="https://example.com/poster.jpg"
+  /><br />
+
+  <label for="lastupdated">Last Updated:</label><br />
+  <input
+    type="date"
+    id="lastupdated"
+    name="lastupdated"
+    value="2023-01-01"
+  /><br />
+
+  <label for="languages">Languages (comma-separated):</label><br />
+  <input
+    type="text"
+    id="languages"
+    name="languages"
+    value="English, Spanish"
+  /><br />
+
+  <label for="released">Released Date:</label><br />
+  <input type="date" id="released" name="released" value="2022-06-15" /><br />
+
+  <label for="directors">Directors (comma-separated):</label><br />
+  <input
+    type="text"
+    id="directors"
+    name="directors"
+    value="Director 1, Director 2"
+  /><br />
+
+  <label for="writers">Writers (comma-separated):</label><br />
+  <input
+    type="text"
+    id="writers"
+    name="writers"
+    value="Writer 1, Writer 2"
+  /><br />
+
+  <label for="awards_wins">Awards - Wins:</label><br />
+  <input type="number" id="awards_wins" name="awards[wins]" value="3" /><br />
+
+  <label for="awards_nominations">Awards - Nominations:</label><br />
+  <input
+    type="number"
+    id="awards_nominations"
+    name="awards[nominations]"
+    value="10"
+  /><br />
+
+  <label for="awards_text">Awards - Text:</label><br />
+  <input
+    type="text"
+    id="awards_text"
+    name="awards[text]"
+    value="Won several awards for Best Movie"
+  /><br />
+
+  <label for="imdb_rating">IMDb Rating:</label><br />
+  <input type="number" id="imdb_rating" name="imdb[rating]" value="8.5" /><br />
+
+  <label for="imdb_votes">IMDb Votes:</label><br />
+  <input type="number" id="imdb_votes" name="imdb[votes]" value="1500" /><br />
+
+  <label for="imdb_id">IMDb ID:</label><br />
+  <input type="number" id="imdb_id" name="imdb[id]" value="123456" /><br />
+
+  <input type="submit" value="Submit" />
+</form>

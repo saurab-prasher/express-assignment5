@@ -21,5 +21,10 @@ const movieSchema = new Schema({
     nominations: Number,
     text: String,
   },
+  imdb: {
+    rating: Number,
+    votes: Number,
+    id: Number,
+  },
 });
 module.exports = mongoose.model("Movies", movieSchema);

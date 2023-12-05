@@ -25,17 +25,18 @@
 
         <ul>
           <li><strong>Genres:</strong>
-            {{#each genres}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}</li>
-          <li><strong>Runtime:</strong> {{runtime}} minutes</li>
-          <li><strong>Rated:</strong> {{rated}}</li>
-          <li><strong>Released:</strong> {{released}}</li>
-          <li><strong>IMDb Rating:</strong> {{imdb.rating}}</li>
-          <li><strong>IMDb Votes:</strong> {{imdb.votes}}</li>
+            {{#each movieData.genres}}{{this}}{{#unless @last}},
+              {{/unless}}{{/each}}</li>
+          <li><strong>Runtime:</strong> {{movieData.runtime}} minutes</li>
+          <li><strong>Rated:</strong> {{movieData.rated}}</li>
+          <li><strong>Released:</strong> {{movieData.released}}</li>
+          <li><strong>IMDb Rating:</strong> {{movieData.imdb.rating}}</li>
+          <li><strong>IMDb Votes:</strong> {{movieData.imdb.votes}}</li>
           <li><strong>Directors:</strong>
-            {{#each directors}}{{this}}{{#unless @last}},
+            {{#each movieData.directors}}{{this}}{{#unless @last}},
               {{/unless}}{{/each}}</li>
           <li><strong>Writers:</strong>
-            {{#each writers}}{{this}}{{#unless @last}},
+            {{#each movieData.writers}}{{this}}{{#unless @last}},
               {{/unless}}{{/each}}</li>
         </ul>
 
@@ -46,7 +47,7 @@
         <h2 class="text-xl font-semibold mb-2">Cast:</h2>
 
         <ul>
-          {{#each cast}}
+          {{#each movieData.cast}}
             <li>{{this}}</li>
           {{/each}}
         </ul>
