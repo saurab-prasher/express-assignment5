@@ -1,16 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-const Movie = require("../models/movies");
+const Movies = require("../models/movies");
 
 /* GET home page. */
-router.post("/", async (req, res, next) => {
+router.post("/", async (req, res) => {
   try {
-    const newMovie = new Movie(req.body);
+    const newMovieData = req.body;
+
+    const newMovie = new Movies(newMovieData);
+
     const savedMovie = await newMovie.save();
-    res.json(savedMovie);
+
+    res.status(201).json(savedMovie);
   } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error("Failed to add a new movie:", error);
+    res.status(500).json({ error: "Failed to add a new movie." });
   }
 });
 
@@ -48,28 +53,31 @@ router.get("/:id", async (req, res) => {
   try {
     const id = req.params.id;
 
-    const movie = await Movie.find({ _id: id }).exec();
-    console.log(movie[0].title);
-    res.render("movie", { movieData: movie[0] });
+    const movie = await Movies.findOne({ _id: id }).exec();
+    if (!movie) {
+      return res.status(404).json({ error: "Movie not found" });
+    }
+
+    console.log(movie.title);
+    res.render("movie", { movieData: movie });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
-// Update details of a specific movie by ID
 router.put("/:id", async (req, res) => {
   try {
-    const updatedMovie = await Movie.findByIdAndUpdate(
+    const updatedMovie = await Movies.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true }
     );
     if (!updatedMovie) {
-      res.status(404).json({ error: "Movie not found" });
-      return;
+      return res.status(404).json({ error: "Movie not found" });
     }
     res.json(updatedMovie);
   } catch (error) {
+    console.error("Error updating movie:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
@@ -77,7 +85,7 @@ router.put("/:id", async (req, res) => {
 // Delete a specific movie by ID
 router.delete("/:id", async (req, res) => {
   try {
-    const deletedMovie = await Movie.findByIdAndDelete(req.params.id);
+    const deletedMovie = await Movies.findByIdAndDelete(req.params.id);
     if (!deletedMovie) {
       res.status(404).json({ error: "Movie not found" });
       return;
