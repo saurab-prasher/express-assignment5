@@ -65,20 +65,19 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// Update details of a specific movie by ID
 router.put("/:id", async (req, res) => {
   try {
-    const updatedMovie = await Movie.findByIdAndUpdate(
+    const updatedMovie = await Movies.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true }
     );
     if (!updatedMovie) {
-      res.status(404).json({ error: "Movie not found" });
-      return;
+      return res.status(404).json({ error: "Movie not found" });
     }
     res.json(updatedMovie);
   } catch (error) {
+    console.error("Error updating movie:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
@@ -86,7 +85,7 @@ router.put("/:id", async (req, res) => {
 // Delete a specific movie by ID
 router.delete("/:id", async (req, res) => {
   try {
-    const deletedMovie = await Movie.findByIdAndDelete(req.params.id);
+    const deletedMovie = await Movies.findByIdAndDelete(req.params.id);
     if (!deletedMovie) {
       res.status(404).json({ error: "Movie not found" });
       return;
