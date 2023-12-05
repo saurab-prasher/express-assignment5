@@ -1,0 +1,60 @@
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <title>{{title}}</title>
+  </head>
+
+  <body class="bg-gray-100 p-8">
+
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded-md shadow-md">
+
+      <h1 class="text-3xl font-bold mb-4">{{movieData.title}}
+        ({{movieData.year}})</h1>
+
+      <p class="text-gray-600">{{movieData.plot}}</p>
+
+      <div class="mt-6">
+
+        <h2 class="text-xl font-semibold mb-2">Details:</h2>
+
+        <ul>
+          <li><strong>Genres:</strong>
+            {{#each genres}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}</li>
+          <li><strong>Runtime:</strong> {{runtime}} minutes</li>
+          <li><strong>Rated:</strong> {{rated}}</li>
+          <li><strong>Released:</strong> {{released}}</li>
+          <li><strong>IMDb Rating:</strong> {{imdb.rating}}</li>
+          <li><strong>IMDb Votes:</strong> {{imdb.votes}}</li>
+          <li><strong>Directors:</strong>
+            {{#each directors}}{{this}}{{#unless @last}},
+              {{/unless}}{{/each}}</li>
+          <li><strong>Writers:</strong>
+            {{#each writers}}{{this}}{{#unless @last}},
+              {{/unless}}{{/each}}</li>
+        </ul>
+
+      </div>
+
+      <div class="mt-6">
+
+        <h2 class="text-xl font-semibold mb-2">Cast:</h2>
+
+        <ul>
+          {{#each cast}}
+            <li>{{this}}</li>
+          {{/each}}
+        </ul>
+
+      </div>
+
+    </div>
+
+  </body>
+
+</html>

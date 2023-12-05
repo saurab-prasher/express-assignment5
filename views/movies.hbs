@@ -1,0 +1,35 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>List of Movies</title>
+  </head>
+  <body>
+{{> navbar}}
+    <h1>List of Movies</h1>
+    <div class="flex flex-wrap p-6">
+
+      {{#each movies}}
+
+        <div class="p-6 flex-auto border mb-4 w-6/12 gap-x-1.5">
+          <h2>{{title}}</h2>
+          <p>{{plot}}</p>
+          <a class="rounded-full border-slate-100" href="/movies/{{_id}}">View
+            Details</a>
+        </div>
+
+      {{/each}}
+    </div>
+    <div>
+      {{#if hasNextPage}}
+        <a href="?page={{nextPage}}">Next Page</a>
+      {{/if}}
+
+      {{#if hasPrevPage}}
+        <a href="?page={{prevPage}}">Previous Page</a>
+      {{/if}}
+    </div>
+
+    <a href="/movies/new">Add a New Movie</a>
+  </body>
+</html>
