@@ -53,9 +53,13 @@ router.get("/:id", async (req, res) => {
   try {
     const id = req.params.id;
 
-    const movie = await Movie.find({ _id: id }).exec();
-    console.log(movie[0].title);
-    res.render("movie", { movieData: movie[0] });
+    const movie = await Movies.findOne({ _id: id }).exec();
+    if (!movie) {
+      return res.status(404).json({ error: "Movie not found" });
+    }
+
+    console.log(movie.title);
+    res.render("movie", { movieData: movie });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }
