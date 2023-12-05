@@ -1,6 +1,7 @@
-<form method="POST" action="/movies">
+<form id="movieForm" method="POST" action="/movies">
   <label for="title">Title:</label><br />
-  <input type="text" id="title" name="title" value="Sample Movie Title" /><br />
+  <input type="text" id="title" name="title" value="Sample Movie Title" />
+  <span id="titleError" style="color: red;"></span><br /><br />
 
   <label for="plot">Plot:</label><br />
   <textarea id="plot" name="plot">This is a sample plot for the movie.</textarea><br
@@ -104,3 +105,6 @@
 
   <input type="submit" value="Submit" />
 </form>
+
+<script type="text/javascript">
+</script>

@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const Movies = require("../models/movies");
+const { body, validationResult } = require("express-validator");
+const validate = [body("title").notEmpty().withMessage("Title is required")];
 
 router.get("/addmovie", async (req, res) => {
   try {
@@ -11,37 +13,26 @@ router.get("/addmovie", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", validate, async (req, res) => {
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+
     const newMovieData = req.body;
 
     const newMovie = new Movies(newMovieData);
 
     const savedMovie = await newMovie.save();
 
-    res.status(201).json(savedMovie);
+    res.status(201).json({ message: "Movie created successfully" });
     console.log(savedMovie);
   } catch (error) {
     console.error("Failed to add a new movie:", error);
     res.status(500).json({ error: "Failed to add a new movie." });
   }
 });
-
-// /* GET home page. */
-// router.post("/", async (req, res) => {
-//   try {
-//     const newMovieData = req.body;
-
-//     const newMovie = new Movies(newMovieData);
-
-//     const savedMovie = await newMovie.save();
-
-//     res.status(201).json(savedMovie);
-//   } catch (error) {
-//     console.error("Failed to add a new movie:", error);
-//     res.status(500).json({ error: "Failed to add a new movie." });
-//   }
-// });
 
 // Get a list of all movies
 router.get("/", async (req, res) => {
