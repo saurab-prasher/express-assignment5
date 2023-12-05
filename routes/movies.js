@@ -25,14 +25,14 @@ router.get("/", async (req, res) => {
   const perPage = 10; // Adjust this based on your preference
 
   try {
-    const movies = await Movie.find({})
+    const movies = await Movies.find({})
       .skip((page - 1) * perPage)
       .limit(perPage)
       .exec();
 
     console.log(movies[0]);
 
-    const totalMovies = await Movie.countDocuments();
+    const totalMovies = await Movies.countDocuments();
     const totalPages = Math.ceil(totalMovies / perPage);
 
     res.render("movies", {
