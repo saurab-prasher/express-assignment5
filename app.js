@@ -99,6 +99,8 @@ app.get("/movies", async (req, res) => {
 
     res.render("movies", {
       movies: movies,
+
+      totalPages: totalPages,
       currentPage: page,
       hasNextPage: page < totalPages,
       hasPrevPage: page > 1,
@@ -123,8 +125,6 @@ app.post("/movies", async (req, res) => {
     res.status(500).json({ error: "Failed to add a new movie." });
   }
 });
-
-// Render a test page
 
 app.get("/movies/search", (req, res) => {
   res.render("searchForm");
