@@ -13,13 +13,19 @@
     name="title"
     value="Sample Movie Title"
     class="mt-1 p-2 border rounded-md w-full"
+    required
   />
 
   <label
     for="plot"
     class="block mt-4 text-sm font-medium text-gray-600"
   >Plot:</label>
-  <textarea id="plot" name="plot" class="mt-1 p-2 border rounded-md w-full">
+  <textarea
+    id="plot"
+    name="plot"
+    class="mt-1 p-2 border rounded-md w-full"
+    required
+  >
     This is a sample plot for the movie.</textarea>
 
   <label
@@ -31,6 +37,7 @@
     id="genres"
     name="genres"
     value="Drama, Comedy"
+    required
     class="mt-1 p-2 border rounded-md w-full"
   />
 
@@ -43,6 +50,7 @@
     id="runtime"
     name="runtime"
     value="120"
+    required
     class="mt-1 p-2 border rounded-md w-full"
   />
 
@@ -55,6 +63,7 @@
     id="rated"
     name="rated"
     value="PG-13"
+    required
     class="mt-1 p-2 border rounded-md w-full"
   />
 
@@ -64,6 +73,7 @@
     type="text"
     id="cast"
     name="cast"
+    required
     value="Actor 1, Actor 2, Actor 3"
     class="mt-1 p-2 border rounded-md w-full"
   />
@@ -77,6 +87,7 @@
     id="num_mflix_comments"
     name="num_mflix_comments"
     value="50"
+    required
     class="mt-1 p-2 border rounded-md w-full"
   />
 
@@ -88,6 +99,7 @@
     type="text"
     id="poster"
     name="poster"
+    required
     value="https://example.com/poster.jpg"
     class="mt-1 p-2 border rounded-md w-full"
   />
@@ -100,6 +112,7 @@
     type="date"
     id="lastupdated"
     name="lastupdated"
+    required
     value="2023-01-01"
     class="mt-1 p-2 border rounded-md w-full"
   />
@@ -109,6 +122,7 @@
   <input
     type="submit"
     value="Submit"
+    required
     class="mt-4 bg-blue-500 text-white p-2 rounded-md cursor-pointer"
   />
 </form>

@@ -135,6 +135,8 @@ app.get("/movies/api", async (req, res) => {
     const perPage = parseInt(req.query.perPage) || 10; // Default perPage value
     const title = req.query.title;
 
+    const totalMovies = await Movie.countDocuments();
+    const totalPages = Math.ceil(totalMovies / perPage);
     let query = {};
 
     if (title) {
@@ -150,6 +152,12 @@ app.get("/movies/api", async (req, res) => {
     console.log(movies);
     res.render("movies", {
       movies: movies,
+      totalPages: totalPages,
+      currentPage: page,
+      hasNextPage: page < totalPages,
+      hasPrevPage: page > 1,
+      nextPage: page + 1,
+      prevPage: page - 1,
     });
   } catch (error) {
     console.error("Error occurred:", error);
