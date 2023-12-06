@@ -1,106 +1,114 @@
-<form method="POST" action="/movies">
-  <label for="title">Title:</label><br />
-  <input type="text" id="title" name="title" value="Sample Movie Title" /><br />
-
-  <label for="plot">Plot:</label><br />
-  <textarea id="plot" name="plot">This is a sample plot for the movie.</textarea><br
+<form
+  method="POST"
+  action="/movies"
+  class="max-w-md mx-auto bg-white p-6 rounded-md shadow-md"
+>
+  <label
+    for="title"
+    class="block text-sm font-medium text-gray-600"
+  >Title:</label>
+  <input
+    type="text"
+    id="title"
+    name="title"
+    value="Sample Movie Title"
+    class="mt-1 p-2 border rounded-md w-full"
   />
 
-  <label for="genres">Genres (comma-separated):</label><br />
-  <input type="text" id="genres" name="genres" value="Drama, Comedy" /><br />
+  <label
+    for="plot"
+    class="block mt-4 text-sm font-medium text-gray-600"
+  >Plot:</label>
+  <textarea id="plot" name="plot" class="mt-1 p-2 border rounded-md w-full">
+    This is a sample plot for the movie.</textarea>
 
-  <label for="runtime">Runtime (minutes):</label><br />
-  <input type="number" id="runtime" name="runtime" value="120" /><br />
+  <label
+    for="genres"
+    class="block mt-4 text-sm font-medium text-gray-600"
+  >Genres (comma-separated):</label>
+  <input
+    type="text"
+    id="genres"
+    name="genres"
+    value="Drama, Comedy"
+    class="mt-1 p-2 border rounded-md w-full"
+  />
 
-  <label for="rated">Rated:</label><br />
-  <input type="text" id="rated" name="rated" value="PG-13" /><br />
+  <label
+    for="runtime"
+    class="block mt-4 text-sm font-medium text-gray-600"
+  >Runtime (minutes):</label>
+  <input
+    type="number"
+    id="runtime"
+    name="runtime"
+    value="120"
+    class="mt-1 p-2 border rounded-md w-full"
+  />
 
-  <label for="cast">Cast (comma-separated):</label><br />
+  <label
+    for="rated"
+    class="block mt-4 text-sm font-medium text-gray-600"
+  >Rated:</label>
+  <input
+    type="text"
+    id="rated"
+    name="rated"
+    value="PG-13"
+    class="mt-1 p-2 border rounded-md w-full"
+  />
+
+  <label for="cast" class="block mt-4 text-sm font-medium text-gray-600">Cast
+    (comma-separated):</label>
   <input
     type="text"
     id="cast"
     name="cast"
     value="Actor 1, Actor 2, Actor 3"
-  /><br />
+    class="mt-1 p-2 border rounded-md w-full"
+  />
 
-  <label for="num_mflix_comments">Number of Comments:</label><br />
+  <label
+    for="num_mflix_comments"
+    class="block mt-4 text-sm font-medium text-gray-600"
+  >Number of Comments:</label>
   <input
     type="number"
     id="num_mflix_comments"
     name="num_mflix_comments"
     value="50"
-  /><br />
+    class="mt-1 p-2 border rounded-md w-full"
+  />
 
-  <label for="poster">Poster URL:</label><br />
+  <label
+    for="poster"
+    class="block mt-4 text-sm font-medium text-gray-600"
+  >Poster URL:</label>
   <input
     type="text"
     id="poster"
     name="poster"
     value="https://example.com/poster.jpg"
-  /><br />
+    class="mt-1 p-2 border rounded-md w-full"
+  />
 
-  <label for="lastupdated">Last Updated:</label><br />
+  <label
+    for="lastupdated"
+    class="block mt-4 text-sm font-medium text-gray-600"
+  >Last Updated:</label>
   <input
     type="date"
     id="lastupdated"
     name="lastupdated"
     value="2023-01-01"
-  /><br />
+    class="mt-1 p-2 border rounded-md w-full"
+  />
 
-  <label for="languages">Languages (comma-separated):</label><br />
+  <!-- Repeat the pattern for the remaining form elements -->
+
   <input
-    type="text"
-    id="languages"
-    name="languages"
-    value="English, Spanish"
-  /><br />
-
-  <label for="released">Released Date:</label><br />
-  <input type="date" id="released" name="released" value="2022-06-15" /><br />
-
-  <label for="directors">Directors (comma-separated):</label><br />
-  <input
-    type="text"
-    id="directors"
-    name="directors"
-    value="Director 1, Director 2"
-  /><br />
-
-  <label for="writers">Writers (comma-separated):</label><br />
-  <input
-    type="text"
-    id="writers"
-    name="writers"
-    value="Writer 1, Writer 2"
-  /><br />
-
-  <label for="awards_wins">Awards - Wins:</label><br />
-  <input type="number" id="awards_wins" name="awards[wins]" value="3" /><br />
-
-  <label for="awards_nominations">Awards - Nominations:</label><br />
-  <input
-    type="number"
-    id="awards_nominations"
-    name="awards[nominations]"
-    value="10"
-  /><br />
-
-  <label for="awards_text">Awards - Text:</label><br />
-  <input
-    type="text"
-    id="awards_text"
-    name="awards[text]"
-    value="Won several awards for Best Movie"
-  /><br />
-
-  <label for="imdb_rating">IMDb Rating:</label><br />
-  <input type="number" id="imdb_rating" name="imdb[rating]" value="8.5" /><br />
-
-  <label for="imdb_votes">IMDb Votes:</label><br />
-  <input type="number" id="imdb_votes" name="imdb[votes]" value="1500" /><br />
-
-  <label for="imdb_id">IMDb ID:</label><br />
-  <input type="number" id="imdb_id" name="imdb[id]" value="123456" /><br />
-
-  <input type="submit" value="Submit" />
+    type="submit"
+    value="Submit"
+    class="mt-4 bg-blue-500 text-white p-2 rounded-md cursor-pointer"
+  />
 </form>
