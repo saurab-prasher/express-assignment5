@@ -1,45 +1,57 @@
-<nav class="bg-gray-800 p-4">
-  <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-    <div class="relative flex h-16 items-center justify-between">
+<nav class="bg-gray-800 text-white p-4">
+  <div class="mx-auto max-w-7xl flex items-center justify-between px-12 py-2">
 
-      <div
-        class="flex flex-1 items-center justify-center sm:items-center sm:justify-start"
-      >
-        <div class="flex flex-shrink-0 items-center">
+    <div class="flex items-center gap-4">
+      <img class="h-12" src="images/logo.png" alt="" />
+      <a href="/" class="text-2xl">
+        Mflix
+      </a>
+    </div>
 
-          <a href="/">
-
-            <img
-              class="h-16 w-auto cursor-pointer"
-              src="images/logo.png"
-              alt="Company logo"
-            />
-          </a>
-
-        </div>
-        <div class="hidden sm:ml-6 sm:block">
-          <div class="flex space-x-4">
-            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-            <a
-              href="/movies"
-              class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
-              aria-current="page"
-            >All Movies</a>
-            <a
-              href="/movies/search"
-              class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-            >Search Form</a>
-
-            <a
-              href="/addMovie"
-              class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-            >Add movie</a>
-
-          </div>
-        </div>
-      </div>
+    <!-- Search Bar -->
+    <div class="flex items-center ml-auto mr-4">
+      <form class="flex items-center m-0" action="/api/movies" method="get">
+        <input
+          type="text"
+          name="title"
+          placeholder="Search title here"
+          class="bg-gray-900 text-white px-4 py-2 rounded-l-md focus:outline-none"
+        />
+        <button
+          class="bg-blue-600 text-white px-4 py-2 rounded-r-md hover:bg-blue-700 focus:outline-none"
+        >
+          Search
+        </button>
+      </form>
 
     </div>
-  </div>
 
+    <!-- Conditionally render "Logout" or "Login" button -->
+    <div class="space-x-4">
+      {{#if currentUser}}
+        <!-- Show "Logout" button if the user is authenticated -->
+        <a
+          href="/logout"
+          class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md"
+        >
+          Logout ({{currentUser.username}})
+        </a>
+
+      {{else}}
+        <!-- Show "Login" button if the user is not authenticated -->
+        <a
+          href="/login"
+          class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md"
+        >
+          Login
+        </a>
+        <a
+          href="/register"
+          class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md"
+        >
+          Register
+        </a>
+      {{/if}}
+    </div>
+  </div>
 </nav>

@@ -1,9 +1,13 @@
 <form
-  action="/movies/api"
+  action="/api/movies"
   method="get"
   class="movieSearchForm max-w-sm mx-auto bg-white p-6 rounded-md shadow-md m-4"
 >
   <h2 class="m-6 text-2xl font-semibold">Movie Search Form</h2>
+
+  <!-- Add hidden inputs for page and perPage -->
+  <input type="hidden" id="page" name="page" value="" />
+  <input type="hidden" id="perPage" name="perPage" value="" />
   <div class="mb-5">
     <label
       for="title"
@@ -21,6 +25,6 @@
 
   <button
     type="submit"
-    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+    class="searchFormSubmit text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
   >Search</button>
 </form>

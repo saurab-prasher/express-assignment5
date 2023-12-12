@@ -89,7 +89,7 @@
           >
             <a
               class="flex items-center py-2 px-4 rounded-full mx-auto text-white bg-red-500 hover:bg-red-700"
-              href="/movies/{{_id}}"
+              href="/api/movies/{{_id}}"
               data-unsp-sanitized="clean"
             >
 
@@ -102,6 +102,18 @@
 
     {{/each}}
 
+ <div class="w-8/12 py-3 m-auto">
+  <div class="bg-white shadow-lg border-gray-100 border sm:rounded-3xl p-8 text-center  transform hover:-translate-y-2 transition ease-in-out duration-500 shadow-lg hover:shadow-2xl">
+    <a href="/movies/addmovie" class="block text-gray-800 font-semibold mt-4 hover:underline">
+      <svg class="h-12 w-12 mx-auto text-gray-400 hover:text-gray-600 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+      </svg>
+      Add Movie
+    </a>
+  </div>
+</div>
+
+
   </div>
 
   <div class="flex flex-col items-center">
@@ -110,7 +122,7 @@
       Showing
       <span class="text-gray-900">{{currentPage}}</span>
       to
-      <span class="text-gray-900">10</span>
+      <span class="text-gray-900">{{perPage}}</span>
       of
       <span class="text-gray-900">{{totalPages}}</span>
       Movies
@@ -118,55 +130,37 @@
     <div class="inline-flex mt-2 xs:mt-0">
       <!-- Buttons -->
       <!-- Previous button -->
-      {{#if hasPrevPage}}
-        <a href="/movies?page={{prevPage}}" class="pagination-button">
-          <button
-            class="flex items-center justify-center px-4 h-10 text-base font-medium text-white bg-gray-800 rounded-s hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-white-400 dark:hover:bg-gray-700 dark:hover:text-white"
-          >
-            <svg
-              class="w-3.5 h-3.5 me-2 rtl:rotate-180"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 14 10"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M13 5H1m0 0 4 4M1 5l4-4"
-              />
-            </svg>
-            Prev
-          </button>
-        </a>
-      {{/if}}
+          {{#if hasPrevPage}}
+  {{#if title}}
+    <a href="/api/movies?page=1&perPage=5&title={{title}}" class="pagination-button">
+  {{else}}
+    <a href="/api/movies?page={{prevPage}}&perPage={{perPage}}" class="pagination-button">
+  {{/if}}
+    <button class="flex items-center justify-center px-4 h-10 text-base font-medium text-white bg-gray-800 border-0 border-s border-gray-700 rounded-e hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-white-400 dark:hover:bg-gray-700 dark:hover:text-white">
+      Prev
+      <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+      </svg>
+    </button>
+  </a>
+{{/if}}
       <!-- Next button -->
-      {{#if hasNextPage}}
-        <a href="/movies?page={{nextPage}}" class="pagination-button">
-          <button
-            class="flex items-center justify-center px-4 h-10 text-base font-medium text-white bg-gray-800 border-0 border-s border-gray-700 rounded-e hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-white-400 dark:hover:bg-gray-700 dark:hover:text-white"
-          >
-            Next
-            <svg
-              class="w-3.5 h-3.5 ms-2 rtl:rotate-180"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 14 10"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M1 5h12m0 0L9 1m4 4L9 9"
-              />
-            </svg>
-          </button>
-        </a>
-      {{/if}}
+     {{#if hasNextPage}}
+  {{#if title}}
+    <a href="/api/movies?page=1&perPage=5&title={{title}}" class="pagination-button">
+  {{else}}
+    <a href="/api/movies?page={{nextPage}}&perPage={{perPage}}" class="pagination-button">
+  {{/if}}
+    <button class="flex items-center justify-center px-4 h-10 text-base font-medium text-white bg-gray-800 border-0 border-s border-gray-700 rounded-e hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-white-400 dark:hover:bg-gray-700 dark:hover:text-white">
+      Next
+      <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+      </svg>
+    </button>
+  </a>
+{{/if}}
+
     </div>
   </div>
 </div>
+

@@ -1,5 +1,5 @@
 <form
-  action="/movies/api/update/{{movie.id}}"
+  action="/api/movies/{{movie.id}}"
   method="post"
   class="movieUpdateForm max-w-sm mx-auto bg-white p-6 rounded-md shadow-md m-4"
 >
@@ -10,11 +10,12 @@
       for="title"
       class="block mb-2 text-sm font-medium text-gray-900"
     >Title:</label>
+    <input name="action" type="text" hidden value="updateMovie" />
     <input
       type="text"
       id="title"
       name="title"
-      value=""
+      value="{{movie.title}}"
       class="mt-1 p-2 border rounded-md w-full"
       placeholder="Enter title here"
       required
@@ -23,30 +24,31 @@
 
   <div class="mb-5">
     <label
-      for="description"
+      for="plot"
       class="block mb-2 text-sm font-medium text-gray-900"
-    >Description:</label>
+    >Plot:</label>
     <textarea
-      id="description"
-      name="description"
-      class="mt-1 p-2 border rounded-md w-full"
-      placeholder="Enter description here"
+      id="plot"
+      name="plot"
+      class="mt-1 p-2 border rounded-md w-full resize"
+      rows="5"
+      placeholder="Enter Plot here"
       required
-    ></textarea>
+    > {{movie.plot}}</textarea>
   </div>
 
   <div class="mb-5">
     <label
-      for="release_date"
+      for="genres"
       class="block mb-2 text-sm font-medium text-gray-900"
     >Release Date:</label>
     <input
       type="text"
-      id="release_date"
-      name="release_date"
-      value=""
+      id="genres"
+      name="genres"
+      value="{{movie.genres}}"
       class="mt-1 p-2 border rounded-md w-full"
-      placeholder="Enter release date here"
+      placeholder="Enter genres here"
       required
     />
   </div>

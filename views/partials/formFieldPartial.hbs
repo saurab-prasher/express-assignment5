@@ -1,0 +1,16 @@
+<label
+  for="{{name}}"
+  class="block text-sm font-medium text-gray-600"
+>{{label}}</label>
+<input
+  type="{{type}}"
+  id="{{name}}"
+  name="{{name}}"
+  value="{{value}}"
+  class="mt-1 p-2 border rounded-md w-full"
+/>
+
+{{#isErrorForField name errors}}
+  <!-- Render error message for the field -->
+  <p class="text-red-500">{{msg}}</p>
+{{/isErrorForField}}

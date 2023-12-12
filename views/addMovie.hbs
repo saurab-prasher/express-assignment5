@@ -1,128 +1,20 @@
 <form
   method="POST"
-  action="/movies"
+  action="/api/movies"
   class="max-w-md mx-auto bg-white p-6 rounded-md shadow-md"
 >
-  <label
-    for="title"
-    class="block text-sm font-medium text-gray-600"
-  >Title:</label>
-  <input
-    type="text"
-    id="title"
-    name="title"
-    value="Sample Movie Title"
-    class="mt-1 p-2 border rounded-md w-full"
-    required
-  />
+   {{#each formData}}
+    {{> formFieldPartial errors=../errors}}
+  {{/each}}
 
-  <label
-    for="plot"
-    class="block mt-4 text-sm font-medium text-gray-600"
-  >Plot:</label>
-  <textarea
-    id="plot"
-    name="plot"
-    class="mt-1 p-2 border rounded-md w-full"
-    required
-  >
-    This is a sample plot for the movie.</textarea>
 
-  <label
-    for="genres"
-    class="block mt-4 text-sm font-medium text-gray-600"
-  >Genres (comma-separated):</label>
-  <input
-    type="text"
-    id="genres"
-    name="genres"
-    value="Drama, Comedy"
-    required
-    class="mt-1 p-2 border rounded-md w-full"
-  />
 
-  <label
-    for="runtime"
-    class="block mt-4 text-sm font-medium text-gray-600"
-  >Runtime (minutes):</label>
-  <input
-    type="number"
-    id="runtime"
-    name="runtime"
-    value="120"
-    required
-    class="mt-1 p-2 border rounded-md w-full"
-  />
-
-  <label
-    for="rated"
-    class="block mt-4 text-sm font-medium text-gray-600"
-  >Rated:</label>
-  <input
-    type="text"
-    id="rated"
-    name="rated"
-    value="PG-13"
-    required
-    class="mt-1 p-2 border rounded-md w-full"
-  />
-
-  <label for="cast" class="block mt-4 text-sm font-medium text-gray-600">Cast
-    (comma-separated):</label>
-  <input
-    type="text"
-    id="cast"
-    name="cast"
-    required
-    value="Actor 1, Actor 2, Actor 3"
-    class="mt-1 p-2 border rounded-md w-full"
-  />
-
-  <label
-    for="num_mflix_comments"
-    class="block mt-4 text-sm font-medium text-gray-600"
-  >Number of Comments:</label>
-  <input
-    type="number"
-    id="num_mflix_comments"
-    name="num_mflix_comments"
-    value="50"
-    required
-    class="mt-1 p-2 border rounded-md w-full"
-  />
-
-  <label
-    for="poster"
-    class="block mt-4 text-sm font-medium text-gray-600"
-  >Poster URL:</label>
-  <input
-    type="text"
-    id="poster"
-    name="poster"
-    required
-    value="https://example.com/poster.jpg"
-    class="mt-1 p-2 border rounded-md w-full"
-  />
-
-  <label
-    for="lastupdated"
-    class="block mt-4 text-sm font-medium text-gray-600"
-  >Last Updated:</label>
-  <input
-    type="date"
-    id="lastupdated"
-    name="lastupdated"
-    required
-    value="2023-01-01"
-    class="mt-1 p-2 border rounded-md w-full"
-  />
-
-  <!-- Repeat the pattern for the remaining form elements -->
 
   <input
     type="submit"
     value="Submit"
     required
-    class="mt-4 bg-blue-500 text-white p-2 rounded-md cursor-pointer"
+
+     class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition duration-300 mt-6"
   />
 </form>
