@@ -210,8 +210,8 @@ app.post(
   (req, res) => {
     // If authentication succeeds, you can redirect to a success page here
 
-    if (req.user && req.user.id) {
-      req.session.userId = req.user.id;
+    if (req.user && req.user._id) {
+      req.session.userId = req.user._id;
     }
     // req.flash("success", "Successfully Logged In!");
     res.redirect("/");
@@ -225,9 +225,11 @@ app.post("/logout", async (req, res) => {
     const userId = req.user._id; // Assuming the user ID is stored in the _id field
 
     // Use the await keyword with findById() to retrieve the user
+    console.log(userId);
     const user = await User.findById(userId);
 
     if (user) {
+      console.log(user);
       // Use the `remove` method to delete the user's sessions
       await store.destroy(user._id);
     }
@@ -270,12 +272,7 @@ app.post("/register", registrationValidationRules, async (req, res, next) => {
         formData: formFields,
       });
     }
-    // if (!errors.isEmpty()) {
-    //   // Validation errors exist
-    //   const errorMessages = errors.array().map((error) => error.msg);
-    //   req.flash("error", errorMessages); // Set flash messages for errors
-    //   return res.redirect("/register");
-    // }
+
     const { username, password, email } = req.body;
 
     // Check if any admin user exists
