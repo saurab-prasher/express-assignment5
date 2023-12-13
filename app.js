@@ -1,3 +1,6 @@
+// if (process.env.NODE_ENV !== "production") {
+//   require("dotenv").config();
+// }
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
@@ -7,10 +10,11 @@ const mongoose = require("mongoose");
 const dbHelpers = require("./helpers/index");
 const session = require("express-session");
 const { body, validationResult } = require("express-validator");
-const MongoStore = require("connect-mongo");
+const MongoDBStore = require("connect-mongo");
 const methodOverride = require("method-override");
 const passport = require("passport");
 // const helmet = require("helmet");
+const mongoSanitize = require("express-mongo-sanitize");
 const LocalStrategy = require("passport-local");
 const flash = require("express-flash");
 const {
@@ -64,24 +68,28 @@ async function connectToDatabase() {
   }
 }
 
-// Middleware
-const store = new MongoStore({
+const storeOptions = {
   mongoUrl: URI,
-  secret: SECRET_ACCESS_TOKEN,
+  collectionName: "sessions",
+  crypto: {
+    secret: SECRET_ACCESS_TOKEN,
+  },
+  autoRemove: "interval",
+  ttl: 14 * 24 * 60 * 60, // = 14 days. Default
   touchAfter: 24 * 60 * 60,
-
-  clear_interval: 3600,
-});
+  clear_interval: 360,
+};
+const sessionStore = MongoDBStore.create(storeOptions);
 
 const sessionConfig = {
-  store,
+  store: sessionStore,
   name: "session",
   secret: SECRET_ACCESS_TOKEN,
-  resave: false,
-  saveUninitialized: true,
+  resave: false, // don't save session if unmodified
+  saveUninitialized: false, // don't create session until something stored
   cookie: {
     httpOnly: true,
-    // secure: true,
+    // secure: true, -- Only works on https connections
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
     maxAge: 1000 * 60 * 60 * 24 * 7,
   },
@@ -99,26 +107,21 @@ passport.use(
   )
 );
 
-// passport.serializeUser(User.serializeUser());
-// passport.deserializeUser(User.deserializeUser());
-
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
-
-passport.deserializeUser(async (id, done) => {
-  try {
-    const user = await User.findById(id);
-    done(null, user);
-  } catch (error) {
-    done(error, null);
-  }
-});
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+app.use(
+  mongoSanitize({
+    replaceWith: "_",
+  })
+);
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
+
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
+
+  // console.log(res.locals);
   next();
 });
 // app.use(helmet());
@@ -201,37 +204,31 @@ app.get("/login", (req, res) => {
 // Handle login form submission
 app.post(
   "/login",
-
   passport.authenticate("local", {
     failureFlash: true,
     failureRedirect: "/login",
   }),
 
   (req, res) => {
-    // If authentication succeeds, you can redirect to a success page here
-
-    if (req.user && req.user._id) {
-      req.session.userId = req.user._id;
-    }
     // req.flash("success", "Successfully Logged In!");
     res.redirect("/");
   }
 );
 
 // Logout route
-app.post("/logout", async (req, res) => {
+app.post("/logout", async (req, res, next) => {
   if (req.isAuthenticated()) {
     // If the user is authenticated, you can get their ID from the req.user object
-    const userId = req.user._id; // Assuming the user ID is stored in the _id field
+    const userId = req.user._id;
 
     // Use the await keyword with findById() to retrieve the user
-    console.log(userId);
+
+    // user_id
     const user = await User.findById(userId);
 
     if (user) {
-      console.log(user);
-      // Use the `remove` method to delete the user's sessions
-      await store.destroy(user._id);
+      // clearnig the mongo store session
+      await sessionStore.clear();
     }
   }
 
