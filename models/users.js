@@ -5,7 +5,7 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const UserSchema = new mongoose.Schema({
   username: String,
   email: { type: String, unique: true, required: true },
-
+  password: String,
   role: {
     type: String,
     enum: ["admin", "user"], // Define possible roles

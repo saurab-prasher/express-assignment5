@@ -1,6 +1,6 @@
 <label
   for="{{name}}"
-  class="block text-sm font-medium text-gray-600"
+  class="block text-sm font-medium text-gray-600 my-3"
 >{{label}}</label>
 <input
   type="{{type}}"
@@ -12,5 +12,8 @@
 
 {{#isErrorForField name errors}}
   <!-- Render error message for the field -->
-  <p class="text-red-500">{{msg}}</p>
+  <p
+    class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+    role="alert"
+  >{{msg}}</p>
 {{/isErrorForField}}

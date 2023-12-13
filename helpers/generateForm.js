@@ -9,7 +9,16 @@ const formFields = [];
 // Iterate through the schema's paths to generate form fields
 for (const path in movieSchema.paths) {
   // Exclude fields that you want to skip (e.g., _id, __v, etc.)
-  if (path === "_id" || path === "__v") {
+
+  if (
+    path === "_id" ||
+    path === "__v" ||
+    path === "imdb.votes" ||
+    path === "imdb.id" ||
+    path === "awards.wins" ||
+    path === "awards.nominations" ||
+    path === "awards.text"
+  ) {
     continue;
   }
 
@@ -32,7 +41,6 @@ for (const path in movieSchema.paths) {
     type: pathType.toLowerCase(),
     value: defaultValue,
   };
-  console.log(formField.label);
 
   // Add the form field to the array
   formFields.push(formField);

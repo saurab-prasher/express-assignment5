@@ -1,12 +1,9 @@
-<!-- Hero Section -->
-
-
 <section
   class="bg-cover bg-center h-screen text-white relative"
   style="background-image: url('images/homePage.jpg');"
 >
   {{#if currentUser}}
- <div id="login-success" class="bg-green-500 p-4 text-white fixed top-10 left-0 right-0 z-50 transform translate-y-full transition-transform ease-in duration-300 text-center opacity-80" id="success-message">
+ <div id="login-success" class="bg-blue-500 p-4 text-white fixed top-10 left-0 right-0 z-50 transform translate-y-full transition-transform ease-in duration-300 text-center opacity-80" id="success-message">
 {{success}}
     </div>
 
@@ -19,7 +16,7 @@
     <p class="text-lg mb-8">Explore a vast collection of movies.</p>
     <a
       href="/api/movies"
-      class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-full text-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105"
+      class="bg-red-600 hover:bg-red-700 text-white py-2 px-6 rounded-full text-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105"
     >Explore Movies</a>
   </div>
 </section>
@@ -135,4 +132,3 @@
 
  
 </section>
-

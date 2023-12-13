@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 const dbHelpers = require("./helpers/index");
 const session = require("express-session");
 const { body, validationResult } = require("express-validator");
-// const MongoStore = require("connect-mongo");
+const MongoStore = require("connect-mongo");
 const methodOverride = require("method-override");
 const passport = require("passport");
 // const helmet = require("helmet");
@@ -21,7 +21,7 @@ const app = express();
 const { URI, SECRET_ACCESS_TOKEN } = require("./config/index");
 const { isLoggedIn, isAdmin } = require("./middlewares/auth");
 const formFields = require("./helpers/generateForm");
-
+const generateFormFields = require("./helpers/generateUserForm");
 const Movie = require("./models/movies");
 const User = require("./models/users");
 
@@ -39,12 +39,7 @@ app.engine(
         if (errors && errors.length > 0) {
           for (let i = 0; i < errors.length; i++) {
             const error = errors[i];
-
-            // console.log(options.fn(this));
-            // console.log(options.fn);
             if (error.path === field) {
-              // console.log(options.fn(this.errors));
-
               return options.fn({ msg: error.msg }); // Render the error message
             }
           }
@@ -70,14 +65,16 @@ async function connectToDatabase() {
 }
 
 // Middleware
-// const store = new MongoStore({
-//   mongoUrl: URI,
-//   secret: SECRET_ACCESS_TOKEN,
-//   touchAfter: 24 * 60 * 60,
-// });
+const store = new MongoStore({
+  mongoUrl: URI,
+  secret: SECRET_ACCESS_TOKEN,
+  touchAfter: 24 * 60 * 60,
+
+  clear_interval: 3600,
+});
 
 const sessionConfig = {
-  // store,
+  store,
   name: "session",
   secret: SECRET_ACCESS_TOKEN,
   resave: false,
@@ -102,8 +99,21 @@ passport.use(
   )
 );
 
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+// passport.serializeUser(User.serializeUser());
+// passport.deserializeUser(User.deserializeUser());
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (error) {
+    done(error, null);
+  }
+});
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
@@ -182,36 +192,91 @@ connectToDatabase().then(() => {
 
 // Login route
 app.get("/login", (req, res) => {
+  if (req.isAuthenticated()) {
+    return res.redirect("/");
+  }
   res.render("login");
 });
 
 // Handle login form submission
 app.post(
   "/login",
+
   passport.authenticate("local", {
     failureFlash: true,
     failureRedirect: "/login",
   }),
-  // passport.authenticate("local", {
-  //   failureRedirect: "/login",
-  //   failureFlash: "Incorrect username or password",
-  // }),
+
   (req, res) => {
     // If authentication succeeds, you can redirect to a success page here
-    req.flash("success", "Successfully Logged In!");
+
+    if (req.user && req.user.id) {
+      req.session.userId = req.user.id;
+    }
+    // req.flash("success", "Successfully Logged In!");
     res.redirect("/");
   }
 );
+
+// Logout route
+app.post("/logout", async (req, res) => {
+  if (req.isAuthenticated()) {
+    // If the user is authenticated, you can get their ID from the req.user object
+    const userId = req.user._id; // Assuming the user ID is stored in the _id field
+
+    // Use the await keyword with findById() to retrieve the user
+    const user = await User.findById(userId);
+
+    if (user) {
+      // Use the `remove` method to delete the user's sessions
+      await store.destroy(user._id);
+    }
+  }
+
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    req.flash("success", "Goodbye!");
+    res.redirect("/");
+  });
+});
 
 // Registration route
 app.get("/register", (req, res) => {
   res.render("register");
 });
 
-app.post("/register", async (req, res, next) => {
+const registrationValidationRules = generateFormFields(User.schema).map(
+  (field) => {
+    return body(field.name)
+      .notEmpty()
+      .withMessage(
+        `${
+          field.name.charAt(0).toUpperCase() + field.name.slice(1)
+        } is required`
+      );
+  }
+);
+
+app.post("/register", registrationValidationRules, async (req, res, next) => {
   try {
+    // Check for validation errors
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.render("register", {
+        errors: errors.array(),
+        formData: formFields,
+      });
+    }
+    // if (!errors.isEmpty()) {
+    //   // Validation errors exist
+    //   const errorMessages = errors.array().map((error) => error.msg);
+    //   req.flash("error", errorMessages); // Set flash messages for errors
+    //   return res.redirect("/register");
+    // }
     const { username, password, email } = req.body;
-    console.log(username, password, email);
 
     // Check if any admin user exists
     const adminUserExists = await User.exists({ role: "admin" });
@@ -237,17 +302,6 @@ app.post("/register", async (req, res, next) => {
     req.flash("error", "Internal Server Error");
     res.redirect("/register");
   }
-});
-
-// Logout route
-app.get("/logout", (req, res) => {
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
-    }
-    req.flash("success", "Goodbye!");
-    res.redirect("/");
-  });
 });
 
 // Routes
@@ -389,10 +443,6 @@ app.post(
         ...result,
       });
     } catch (error) {
-      // try {
-
-      // } catch (error) {
-      //   console.error("Failed to add a new movie:", error);
       res.status(500).json({ error: "Failed to add a new movie." });
       // }
     }
@@ -428,8 +478,6 @@ app.get("/api/movies/:id", async (req, res) => {
 // /movies/api/update/573a13cdf29313caabd84f84
 app.post("/api/movies/:id", isAdmin, async (req, res, next) => {
   try {
-    console.log("working");
-
     if (req.body.action === "updateMovie") {
       const result = await dbHelpers.updateMovieById(req.body, req.params.id);
 
@@ -439,15 +487,6 @@ app.post("/api/movies/:id", isAdmin, async (req, res, next) => {
     } else {
       next();
     }
-
-    // // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //   console.log(errors.array());
-    //   return res.render("updateForm", {
-    //     errors: errors.array(),
-    //     formData: req.body,
-    //   });
-    // }
   } catch (error) {
     console.error("Error updating movie:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -461,16 +500,17 @@ app.post("/api/movies/:id", isAdmin, async (req, res, next) => {
 // collection and return a success / fail message to the client.
 app.post("/api/movies/:id", isAdmin, async (req, res) => {
   try {
-    const result = dbHelpers.deleteMovieById({ _id: req.body.id });
-
-    console.log("route working");
+    const result = await dbHelpers.deleteMovieById({ _id: req.body.id });
 
     res.render("movieSuccess", {
       ...result,
-    }); // Redirect to the same page to display the flash message
-    // res.json(deletedMovie);
+    });
   } catch (error) {
     console.error("Error deleting movie:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
+});
+
+app.get("*", (req, res) => {
+  res.status(404).render("notFound");
 });

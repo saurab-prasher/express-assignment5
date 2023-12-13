@@ -14,6 +14,7 @@ module.exports.isAdmin = (req, res, next) => {
     return next();
   } else {
     // User is not an admin, deny access
-    res.status(403).send("Access denied. You are not authorized.");
+    res.render("accessDenied");
+    // res.status(403).send("Access denied. You are not authorized.");
   }
 };
