@@ -428,10 +428,15 @@ app.post(
         lastupdated: req.body.lastupdated,
         poster: req.body.poster,
         cast: castArray,
+        imdb: {
+          rating: req.body["imdb.rating"],
+          votes: 1500,
+          id: 123,
+        },
       };
       const newMovie = new Movie(newMovieData);
 
-      const result = dbHelpers.addMovie(newMovie);
+      const result = await dbHelpers.addMovie(newMovie);
 
       res.render("movieSuccess", {
         ...result,

@@ -6,8 +6,6 @@ module.exports = async function (data) {
 
     const savedMovie = await newMovie.save();
 
-    console.log(savedMovie);
-
     return {
       mainMessage: "Movie added  successfully",
       secondaryMessage: "The movie has been added in your collection.",
