@@ -1,0 +1,20 @@
+<form
+  method="POST"
+  action="/api/movies"
+  class="max-w-md mx-auto bg-white p-6 rounded-md shadow-md"
+>
+   {{#each formData}}
+    {{> formFieldPartial errors=../errors}}
+  {{/each}}
+
+
+
+
+  <input
+    type="submit"
+    value="Submit"
+    required
+
+     class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition duration-300 mt-6"
+  />
+</form>

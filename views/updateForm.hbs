@@ -1,0 +1,61 @@
+<form
+  action="/api/movies/{{movie.id}}"
+  method="post"
+  class="movieUpdateForm max-w-sm mx-auto bg-white p-6 rounded-md shadow-md m-4"
+>
+  <h2 class="m-6 text-2xl font-semibold">Update Movie</h2>
+
+  <div class="mb-5">
+    <label
+      for="title"
+      class="block mb-2 text-sm font-medium text-gray-900"
+    >Title:</label>
+    <input name="action" type="text" hidden value="updateMovie" />
+    <input
+      type="text"
+      id="title"
+      name="title"
+      value="{{movie.title}}"
+      class="mt-1 p-2 border rounded-md w-full"
+      placeholder="Enter title here"
+      required
+    />
+  </div>
+
+  <div class="mb-5">
+    <label
+      for="plot"
+      class="block mb-2 text-sm font-medium text-gray-900"
+    >Plot:</label>
+    <textarea
+      id="plot"
+      name="plot"
+      class="mt-1 p-2 border rounded-md w-full resize"
+      rows="5"
+      placeholder="Enter Plot here"
+      required
+    > {{movie.plot}}</textarea>
+  </div>
+
+  <div class="mb-5">
+    <label
+      for="genres"
+      class="block mb-2 text-sm font-medium text-gray-900"
+    >Release Date:</label>
+    <input
+      type="text"
+      id="genres"
+      name="genres"
+      value="{{movie.genres}}"
+      class="mt-1 p-2 border rounded-md w-full"
+      placeholder="Enter genres here"
+      required
+    />
+  </div>
+
+  <input type="hidden" name="_method" value="put" />
+  <button
+    type="submit"
+    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+  >Update</button>
+</form>
